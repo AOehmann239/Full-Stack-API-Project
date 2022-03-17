@@ -7,11 +7,12 @@ const User = require('./user');
 // destructure the schema and model constructors from mongoose
 const { Schema, model } = mongoose;
 
-const foodDiarySchema = new Schema(
+const foodSchema = new Schema(
   {
-    date: { type: Date, required: true },
-    foods: [{ type: Schema.Types.ObjectID, ref: 'Food' }],
-
+    foodName: { type: String, required: true },
+    protein: { type: Number, required: true },
+    fats: { type: Number, required: true },
+    carbs: { type: Number, required: true },
     owner: {
       type: Schema.Types.ObjectID,
       ref: 'User',
@@ -20,7 +21,7 @@ const foodDiarySchema = new Schema(
   { timestamps: true }
 );
 
-const FoodDiaryEntry = model('FoodDiaryEntry', foodDiarySchema);
+const Food = model('Food', foodSchema);
 
 /////////////////////////////////
 // Export our Model

@@ -1,5 +1,15 @@
 {% layout "layout.liquid" %} {% block content %}
 
 <h1>Welcome to the Thunderdome</h1>
-
+<div class="container-md">
+  <div class="container">
+    <form class="food-entry" action="/food" method="POST">
+      <label class="text">Food:</label><br />
+      <input type="text" name="foodSearch" placeholder="food name here" /><br />
+      <button class="btn btn-primary" type="submit">
+        Search for food macros
+      </button>
+    </form>
+  </div>
+</div>
 {% endblock %}

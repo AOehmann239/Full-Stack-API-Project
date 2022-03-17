@@ -6,6 +6,7 @@ const express = require('express');
 const middleware = require('./utils/middleware');
 const FoodDiaryRouter = require('./controllers/foodDiary');
 const UserRouter = require('./controllers/user');
+const FoodRouter = require('./controllers/food');
 const User = require('./models/user');
 // SEE MORE DEPENDENCIES IN ./utils/middleware.js
 // user and resource routes linked in ./utils/middleware.js
@@ -23,6 +24,7 @@ middleware(app);
 
 app.use('/auth', UserRouter);
 app.use('/foodDiary', FoodDiaryRouter);
+app.use('/food', FoodRouter);
 
 app.get('/', (req, res) => {
   const { username, userId, loggedIn } = req.session;
