@@ -61,6 +61,7 @@ let carbs = '';
 router.post('/', (req, res) => {
   req.body.owner = req.session.userId;
   const foodSearch = req.body.foodSearch;
+  const amount = req.body.amountEntered;
 
   const url = `https://api.edamam.com/api/food-database/v2/parser?app_id=${ApplicationID}&app_key=${ApplicationKey}&ingr=${foodSearch}&nutrition-type=logging`;
   fetch(url)
@@ -74,6 +75,7 @@ router.post('/', (req, res) => {
       protein = jsonData.parsed[0].food.nutrients.PROCNT;
       fats = jsonData.parsed[0].food.nutrients.FAT;
       carbs = jsonData.parsed[0].food.nutrients.CHOCDF;
+      let amount = req.body.amountEntered;
       //   console.log(foodName);
       //   console.log(protein);
       //   console.log(fats);
@@ -83,12 +85,12 @@ router.post('/', (req, res) => {
         protein,
         fats,
         carbs,
+        amount,
       });
     });
 });
-//add the info for the searched food to the array of saved foods
+//add the info for the food to the data of saved foods
 router.post('/add', (req, res) => {
-  let newFood = req.body;
   req.body.owner = req.session.userId;
   //   req.body.foodName = foodName;
   //   req.body.protein = protein;
@@ -97,7 +99,6 @@ router.post('/add', (req, res) => {
   console.log('this is the new food', req.body);
   Food.create(req.body)
     .then((food) => {
-      console.log('this was returned from create', food);
       res.redirect('/');
     })
     .catch((err) => {
@@ -106,10 +107,23 @@ router.post('/add', (req, res) => {
     });
 });
 
-router.get('/allFoods', (req, res) => {
-  const username = req.session.username;
-  const loggedIn = req.session.loggedIn;
-  res.render('foods/index', { username, loggedIn });
+// index that shows only the user's fruits
+router.get('/mine', (req, res) => {
+  // find the fruits
+  Food.find({ owner: req.session.userId })
+    // then render a template AFTER they're found
+    .then((foods) => {
+      // console.log(fruits)
+      const username = req.session.username;
+      const loggedIn = req.session.loggedIn;
+
+      res.render('food/index', { fruits, username, loggedIn });
+    })
+    // show an error if there is one
+    .catch((error) => {
+      console.log(error);
+      res.json({ error });
+    });
 });
 
 // edit route -> GET that takes us to the edit form view

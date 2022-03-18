@@ -6,12 +6,14 @@
       <p> Protein: {{ protein }} </p>
       <p> Fats: {{ fats }} </p>
       <p> Carbs: {{ carbs }} </p>
+      <p> Amount: {{ amount }} (g)</p>
       <div class="btn-group">
         <form action="/food/add" method="POST">
           <input type="text" name="foodName" value="{{foodName}}" hidden>
           <input type="text" name="protein" value="{{protein}}" hidden>
           <input type="text" name="fats" value="{{fats}}" hidden>
           <input type="text" name="carbs" value="{{carbs}}" hidden>
+          <input type="text" name="amount" value="{{amount}}" hidden>
           <input type="submit" value="Add Food" class="btn btn-success" />
         </form>
       </div>
