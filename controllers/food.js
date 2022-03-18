@@ -52,15 +52,15 @@ router.get('/new', (req, res) => {
 //   const { username, userId, loggedIn } = req.session;
 //   res.render('foodDiaryEntries/new', { username, loggedIn });
 // });
-
+let foodName = '';
+let protein = '';
+let fats = '';
+let carbs = '';
 //
 router.post('/', (req, res) => {
   req.body.owner = req.session.userId;
   const foodSearch = req.body.foodSearch;
-  let foodName = '';
-  let protein = '';
-  let fats = '';
-  let carbs = '';
+
   const url = `https://api.edamam.com/api/food-database/v2/parser?app_id=${ApplicationID}&app_key=${ApplicationKey}&ingr=${foodSearch}&nutrition-type=logging`;
   fetch(url)
     .then((responseData) => {
@@ -88,18 +88,20 @@ router.post('/', (req, res) => {
 //add the info for the searched food to the array of saved foods
 router.post('/add', (req, res) => {
   req.body.owner = req.session.userId;
+  req.body.foodName = foodName;
+  req.body.protein = protein;
+  req.body.fats = fats;
+  req.body.carbs = carbs;
   Food.create(req.body)
     .then((food) => {
       console.log('this was returned from create', food);
       res.redirect('/');
     })
-    .catch((error) => {
-      res.redirect(`/error?error=${error}`);
+    .catch((err) => {
+      console.log(err);
+      res.json({ err });
     });
 });
-
-// req.body.foodName = foodName
-// req.body.protein = protein
 
 // edit route -> GET that takes us to the edit form view
 router.get('/:id/edit', (req, res) => {
