@@ -2,27 +2,21 @@
 <div class="container-md">
   
     <article>
-      <p> Food: {{ foodName }} </p>,
-      <p> Protein: {{ protein }} </p>,
-      <p> Fats: {{ fats }} </p>,
-      <p> Carbs: {{ carbs }} </p>,
+      <p> Food: {{ foodName }} </p>
+      <p> Protein: {{ protein }} </p>
+      <p> Fats: {{ fats }} </p>
+      <p> Carbs: {{ carbs }} </p>
       {% if entry.owner == userId %}
       <div class="btn-group">
         <a href="/food/{{ entry.id }}/edit" class="btn btn-primary">Edit</a>
         <form action="/food-diary/{{ entry.id }}?_method=DELETE" method="POST">
           <input type="submit" value="Delete" class="btn btn-danger" />
         </form>
+        <form action="/food/add" class
       </div>
       {% endif %}
     </article>
-    {% if entry.owner == userId %}
-    <div class="btn-group">
-      <a href="/food-diary/{{ entry.id }}/edit" class="btn btn-primary">Edit</a>
-      <form action="/food-diary/{{ entry.id }}?_method=DELETE" method="POST">
-        <input type="submit" value="Delete" class="btn btn-danger" />
-      </form>
-    </div>
-    {% endif %}
+  
   </article>
 </div>
 {% endblock %}

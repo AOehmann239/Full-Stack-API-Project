@@ -53,7 +53,7 @@ router.get('/new', (req, res) => {
 //   res.render('foodDiaryEntries/new', { username, loggedIn });
 // });
 
-// create -> POST route that actually calls the db and makes a new document
+//
 router.post('/', (req, res) => {
   req.body.owner = req.session.userId;
   const foodSearch = req.body.foodSearch;
@@ -68,7 +68,7 @@ router.post('/', (req, res) => {
     })
     // parse out what data you want from the json data
     .then((jsonData) => {
-      //   let foodData = jsonData;
+      console.log(jsonData);
       foodName = jsonData.text;
       protein = jsonData.parsed[0].food.nutrients.PROCNT;
       fats = jsonData.parsed[0].food.nutrients.FAT;
@@ -77,13 +77,17 @@ router.post('/', (req, res) => {
       console.log(protein);
       console.log(fats);
       console.log(carbs);
+      res.render('foods/show', {
+        foodName,
+        protein,
+        fats,
+        carbs,
+      });
     });
 });
 
-// req.body.foodName = foodName
-// req.body.protein = protein
-
-//   Food.create(req.body)
+// router.post('/add', req, res) => {
+//     Food.create(req.body)
 //     .then((food) => {
 //       console.log('this was returned from create', food);
 //       res.redirect('/foodDiaryEntries');
@@ -91,6 +95,10 @@ router.post('/', (req, res) => {
 //     .catch((error) => {
 //       res.redirect(`/error?error=${error}`);
 //     });
+// }
+
+// req.body.foodName = foodName
+// req.body.protein = protein
 
 // edit route -> GET that takes us to the edit form view
 router.get('/:id/edit', (req, res) => {
