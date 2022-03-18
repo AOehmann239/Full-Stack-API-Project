@@ -85,17 +85,18 @@ router.post('/', (req, res) => {
       });
     });
 });
-
-// router.post('/add', req, res) => {
-//     Food.create(req.body)
-//     .then((food) => {
-//       console.log('this was returned from create', food);
-//       res.redirect('/foodDiaryEntries');
-//     })
-//     .catch((error) => {
-//       res.redirect(`/error?error=${error}`);
-//     });
-// }
+//add the info for the searched food to the array of saved foods
+router.post('/add', (req, res) => {
+  req.body.owner = req.session.userId;
+  Food.create(req.body)
+    .then((food) => {
+      console.log('this was returned from create', foodName);
+      res.redirect('/food');
+    })
+    .catch((error) => {
+      res.redirect(`/error?error=${error}`);
+    });
+});
 
 // req.body.foodName = foodName
 // req.body.protein = protein

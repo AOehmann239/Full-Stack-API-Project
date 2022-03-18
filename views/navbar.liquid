@@ -3,9 +3,7 @@
   <div class="container-fluid">
     <a href="/" class="navbar-brand">Gainz</a>
     {% if loggedIn %}
-    <a href="/foodDiaryEntries/mine" class="nav-link text-light"
-      >Hello {{ username }}
-    </a>
+    <a href="/client/bio" class="nav-link text-light">Hello {{ username }} </a>
     {% endif %}
     <button
       class="navbar-toggler"
@@ -20,9 +18,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       {% if loggedIn %}
-      <a href="/foodDiaryEntries" class="nav-link text-light">View All</a>
-      <a href="/food/new" class="nav-link text-light">New</a>
-      <a href="/foodDiaryEntries/index" class="nav-link text-light">My Diary</a>
+      <a href="/foods" class="nav-link text-light">View My Foods</a>
+      <!-- <a href="/food/new" class="nav-link text-light">New</a> -->
+      <a href="/foodDiaryEntries/" class="nav-link text-light">My Diary</a>
       <a href="/auth/logout" class="nav-link text-light">Log Out</a>
       {% else %}
       <a href="/auth/signup" class="nav-link text-light">Sign Up</a>

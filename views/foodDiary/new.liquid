@@ -1,0 +1,17 @@
+{% layout 'layout.liquid' %} {% block content %}
+<div class="container-sm">
+  <form action="/foodDiary" method="POST">
+    <fieldset>
+      <legend>Create New Diary Entry</legend>
+      <label class="form-label">Date: </label>
+      <input
+        type="date"
+        name="foodSearch"
+        placeholder="ex February 12 2021"
+        class="form-control"
+      />
+    </fieldset>
+    <input type="submit" value="Create New Day" class="btn btn-success" />
+  </form>
+</div>
+{% endblock %}
