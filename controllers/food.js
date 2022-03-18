@@ -29,8 +29,10 @@ router.use((req, res, next) => {
 // router.get('/', (req, res) => {
 //   res.render('index');
 // });
-router.get('/foods/new', (req, res) => {
-  res.render('new.liquid');
+router.get('/new', (req, res) => {
+  const username = req.session.username;
+  const loggedIn = req.session.loggedIn;
+  res.render('foods/new', { username, loggedIn });
 });
 // // index that shows only the user's food diary entries
 // router.get('/mine', (req, res) => {
