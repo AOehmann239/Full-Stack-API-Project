@@ -73,10 +73,10 @@ router.post('/', (req, res) => {
       protein = jsonData.parsed[0].food.nutrients.PROCNT;
       fats = jsonData.parsed[0].food.nutrients.FAT;
       carbs = jsonData.parsed[0].food.nutrients.CHOCDF;
-      console.log(foodName);
-      console.log(protein);
-      console.log(fats);
-      console.log(carbs);
+      //   console.log(foodName);
+      //   console.log(protein);
+      //   console.log(fats);
+      //   console.log(carbs);
       res.render('foods/show', {
         foodName,
         protein,
