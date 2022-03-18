@@ -1,9 +1,6 @@
 // Import Dependencies
 const express = require('express');
 const FoodDiaryEntry = require('../models/foodDiary');
-const fetch = require('node-fetch');
-const ApplicationID = process.env.ApplicationID;
-const ApplicationKey = process.env.ApplicationKey;
 
 // Create router
 const router = express.Router();
@@ -30,5 +27,12 @@ router.get('/new', (req, res) => {
   res.render('foodDiary/new', { username, loggedIn });
 });
 
+router.post('/', (req, res) => {
+  req.body.owner = req.session.userId;
+  const dateEntered = req.body.dateEntered;
+  res.render('foodDiary/show', {
+    dateEntered,
+  });
+});
 // Export the Router
 module.exports = router;

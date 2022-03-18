@@ -90,8 +90,8 @@ router.post('/add', (req, res) => {
   req.body.owner = req.session.userId;
   Food.create(req.body)
     .then((food) => {
-      console.log('this was returned from create', foodName);
-      res.redirect('/food');
+      console.log('this was returned from create', food);
+      res.redirect('/');
     })
     .catch((error) => {
       res.redirect(`/error?error=${error}`);
