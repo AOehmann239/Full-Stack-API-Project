@@ -8,6 +8,7 @@ const ApplicationKey = process.env.ApplicationKey;
 
 // Create router
 const router = express.Router();
+let foodArray = [];
 
 // Router Middleware
 // Authorization middleware
@@ -87,11 +88,13 @@ router.post('/', (req, res) => {
 });
 //add the info for the searched food to the array of saved foods
 router.post('/add', (req, res) => {
+  let newFood = req.body;
   req.body.owner = req.session.userId;
-  req.body.foodName = foodName;
-  req.body.protein = protein;
-  req.body.fats = fats;
-  req.body.carbs = carbs;
+  //   req.body.foodName = foodName;
+  //   req.body.protein = protein;
+  //   req.body.fats = fats;
+  //   req.body.carbs = carbs;
+  console.log('this is the new food', req.body);
   Food.create(req.body)
     .then((food) => {
       console.log('this was returned from create', food);
@@ -101,6 +104,12 @@ router.post('/add', (req, res) => {
       console.log(err);
       res.json({ err });
     });
+});
+
+router.get('/allFoods', (req, res) => {
+  const username = req.session.username;
+  const loggedIn = req.session.loggedIn;
+  res.render('foods/index', { username, loggedIn });
 });
 
 // edit route -> GET that takes us to the edit form view
