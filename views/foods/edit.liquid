@@ -1,0 +1,35 @@
+{% layout 'layout.liquid' %} {% block content %}
+<div class="container-sm">
+  <form action="/food-diary/{{ entry.id }}" method="POST">
+    <fieldset>
+      <legend>Edit Diary Entry</legend>
+      <label class="form-label">Date: </label>
+      <input
+        type="date"
+        name="date"
+        placeholder="{{ entry.date }}"
+        value="{{ entry.date }}"
+        class="form-control"
+      />
+      <label class="form-label">Food:</label>
+      <input
+        type="text"
+        name="food"
+        placeholder="{{ entry.food }}"
+        value="{{ entry.body }}"
+        class="form-control"
+      />
+      <label class="form-label">Amount:</label>
+      <input
+        type="number"
+        name="amount"
+        min="1"
+        max="1000"
+        value="{{ entry.amount }}"
+        class="form-control"
+      />
+    </fieldset>
+    <input type="submit" value="Edit Diary" class="btn btn-success" />
+  </form>
+</div>
+{% endblock %}

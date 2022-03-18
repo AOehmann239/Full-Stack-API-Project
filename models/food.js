@@ -26,4 +26,4 @@ const Food = model('Food', foodSchema);
 /////////////////////////////////
 // Export our Model
 /////////////////////////////////
-module.exports = FoodDiaryEntry;
+module.exports = Food;

@@ -1,6 +1,6 @@
 // Import Dependencies
 const express = require('express');
-const FoodDiaryEntry = require('../models/foodDiary');
+const Food = require('../models/food');
 const fetch = require('node-fetch');
 const req = require('express/lib/request');
 const ApplicationID = process.env.ApplicationID;
@@ -26,10 +26,12 @@ router.use((req, res, next) => {
 // Routes
 
 // index ALL
-router.get('/', (req, res) => {
-  res.render('index');
+// router.get('/', (req, res) => {
+//   res.render('index');
+// });
+router.get('/foods/new', (req, res) => {
+  res.render('new.liquid');
 });
-
 // // index that shows only the user's food diary entries
 // router.get('/mine', (req, res) => {
 //   // destructure user info from req.session
@@ -92,7 +94,7 @@ router.post('/', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   // we need to get the id
   const foodId = req.params.id;
-  FoodDiaryEntry.findById(foodId)
+  Food.findById(foodId)
     .then((food) => {
       res.render('foodDiaryEntries/edit', { food });
     })
@@ -106,7 +108,7 @@ router.put('/:id', (req, res) => {
   const foodId = req.params.id;
   req.body.ready = req.body.ready === 'on' ? true : false;
 
-  FoodDiaryEntry.findByIdAndUpdate(foodId, req.body, { new: true })
+  Food.findByIdAndUpdate(foodId, req.body, { new: true })
     .then((food) => {
       res.redirect(`/foodDiaryEntries/${food.id}`);
     })
@@ -118,7 +120,7 @@ router.put('/:id', (req, res) => {
 // show route
 router.get('/:id', (req, res) => {
   const foodId = req.params.id;
-  FoodDiaryEntry.findById(foodId)
+  Food.findById(foodId)
     .then((food) => {
       const { username, loggedIn, userId } = req.session;
       res.render('foodDiaryEntries/show', { food, username, loggedIn, userId });
@@ -131,7 +133,7 @@ router.get('/:id', (req, res) => {
 // delete route
 router.delete('/:id', (req, res) => {
   const foodId = req.params.id;
-  FoodDiaryEntry.findByIdAndRemove(foodId)
+  Food.findByIdAndRemove(foodId)
     .then((food) => {
       res.redirect('/foodDiaryEntries');
     })

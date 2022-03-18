@@ -1,0 +1,17 @@
+{% layout 'layout.liquid' %} {% block content %}
+<div class="container-sm">
+  <form action="/foods" method="POST">
+    <fieldset>
+      <legend>Create New Food</legend>
+      <label class="form-label">Name: </label>
+      <input
+        type="text"
+        name="foodSearch"
+        placeholder="enter food name"
+        class="form-control"
+      />
+    </fieldset>
+    <input type="submit" value="Create New Fruit" class="btn btn-success" />
+  </form>
+</div>
+{% endblock %}
