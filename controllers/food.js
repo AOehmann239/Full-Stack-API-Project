@@ -93,10 +93,10 @@ router.post('/', (req, res) => {
 //add the info for the food to the data of saved foods
 router.post('/add', (req, res) => {
   req.body.owner = req.session.userId;
-  //   req.body.foodName = foodName;
-  //   req.body.protein = protein;
-  //   req.body.fats = fats;
-  //   req.body.carbs = carbs;
+  // req.body.foodName = foodName;
+  // req.body.protein = protein;
+  // req.body.fats = fats;
+  // req.body.carbs = carbs;
   console.log('this is the new food', req.body);
   Food.create(req.body)
     .then((food) => {
