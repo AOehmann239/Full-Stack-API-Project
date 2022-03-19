@@ -57,7 +57,7 @@ let foodName = '';
 let protein = '';
 let fats = '';
 let carbs = '';
-//
+// THIS CONTROLLERS FINDS A FOOD IN THE API AND RENDERS A PAGE FOR THOSE RESULTS
 router.post('/', (req, res) => {
   req.body.owner = req.session.userId;
   const foodSearch = req.body.foodSearch;
@@ -80,6 +80,7 @@ router.post('/', (req, res) => {
       //   console.log(protein);
       //   console.log(fats);
       //   console.log(carbs);
+      //
       res.render('foods/show', {
         foodName,
         protein,
@@ -136,6 +137,45 @@ router.get('/:id/edit', (req, res) => {
     })
     .catch((error) => {
       res.redirect(`/error?error=${error}`);
+    });
+});
+
+// update route -> sends a put request to our database
+router.put('/:id', (req, res) => {
+  // get the id
+  const foodId = req.params.id;
+  // tell mongoose to update the food
+  Food.findByIdAndUpdate(foodId, req.body, { new: true })
+    .then((food) => {
+      // console.log('the updated fruit', fruit);
+
+      res.redirect(`/foods/${food.id}`);
+    })
+    .catch((error) => res.json(error));
+});
+
+// SHOW ROUTE FOR ALL FOODS IN THE DATABASE NOT THE API
+router.get('/:id', (req, res) => {
+  // first, we need to get the id
+  const foodId = req.params.id;
+  // then we can find a fruit by its id
+  Food.findById(foodId)
+    .then((food) => {
+      console.log('the food we got\n', food);
+      const username = req.session.username;
+      const loggedIn = req.session.loggedIn;
+      const userId = req.session.userId;
+      res.render('foods/showIndividualFood', {
+        food,
+        username,
+        loggedIn,
+        userId,
+      });
+    })
+    // if there is an error, show that instead
+    .catch((err) => {
+      console.log(err);
+      res.json({ err });
     });
 });
 
