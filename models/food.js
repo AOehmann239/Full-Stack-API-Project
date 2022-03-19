@@ -13,6 +13,7 @@ const foodSchema = new Schema(
     protein: { type: Number, required: true },
     fats: { type: Number, required: true },
     carbs: { type: Number, required: true },
+    amount: { type: Number, required: true },
     owner: {
       type: Schema.Types.ObjectID,
       ref: 'User',

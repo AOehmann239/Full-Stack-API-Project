@@ -100,6 +100,7 @@ router.post('/add', (req, res) => {
   console.log('this is the new food', req.body);
   Food.create(req.body)
     .then((food) => {
+      console.log('this is the food', food);
       res.redirect('/');
     })
     .catch((err) => {
@@ -107,7 +108,6 @@ router.post('/add', (req, res) => {
       res.json({ err });
     });
 });
-//owner: req.session.userId
 // index that shows only the user's fruits
 router.get('/mine', (req, res) => {
   // find the foods
@@ -149,7 +149,7 @@ router.put('/:id', (req, res) => {
     .then((food) => {
       // console.log('the updated fruit', fruit);
 
-      res.redirect(`/foods/${food.id}`);
+      res.redirect(`/food/${food.id}`);
     })
     .catch((error) => res.json(error));
 });
@@ -170,6 +170,7 @@ router.get('/:id', (req, res) => {
         username,
         loggedIn,
         userId,
+        // amount,
       });
     })
     // if there is an error, show that instead
@@ -184,7 +185,7 @@ router.delete('/:id', (req, res) => {
   const foodId = req.params.id;
   Food.findByIdAndRemove(foodId)
     .then((food) => {
-      res.redirect('foods/mine');
+      res.redirect('/food/mine');
     })
     .catch((error) => {
       res.redirect(`/error?error=${error}`);
