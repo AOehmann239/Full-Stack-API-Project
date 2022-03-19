@@ -72,10 +72,10 @@ router.post('/', (req, res) => {
     .then((jsonData) => {
       console.log(jsonData);
       foodName = jsonData.text;
-      protein = jsonData.parsed[0].food.nutrients.PROCNT;
-      fats = jsonData.parsed[0].food.nutrients.FAT;
-      carbs = jsonData.parsed[0].food.nutrients.CHOCDF;
-      let amount = req.body.amountEntered;
+      protein = jsonData.parsed[0].food.nutrients.PROCNT * (amount / 100);
+      fats = jsonData.parsed[0].food.nutrients.FAT * (amount / 100);
+      carbs = jsonData.parsed[0].food.nutrients.CHOCDF * (amount / 100);
+
       //   console.log(foodName);
       //   console.log(protein);
       //   console.log(fats);
@@ -106,18 +106,18 @@ router.post('/add', (req, res) => {
       res.json({ err });
     });
 });
-
+//owner: req.session.userId
 // index that shows only the user's fruits
 router.get('/mine', (req, res) => {
-  // find the fruits
+  // find the foods
   Food.find({ owner: req.session.userId })
     // then render a template AFTER they're found
     .then((foods) => {
-      // console.log(fruits)
+      console.log('these are the foods', foods);
       const username = req.session.username;
       const loggedIn = req.session.loggedIn;
 
-      res.render('food/index', { fruits, username, loggedIn });
+      res.render('foods/mine', { foods, username, loggedIn });
     })
     // show an error if there is one
     .catch((error) => {
@@ -132,34 +132,7 @@ router.get('/:id/edit', (req, res) => {
   const foodId = req.params.id;
   Food.findById(foodId)
     .then((food) => {
-      res.render('foodDiaryEntries/edit', { food });
-    })
-    .catch((error) => {
-      res.redirect(`/error?error=${error}`);
-    });
-});
-
-// update route
-router.put('/:id', (req, res) => {
-  const foodId = req.params.id;
-  req.body.ready = req.body.ready === 'on' ? true : false;
-
-  Food.findByIdAndUpdate(foodId, req.body, { new: true })
-    .then((food) => {
-      res.redirect(`/foodDiaryEntries/${food.id}`);
-    })
-    .catch((error) => {
-      res.redirect(`/error?error=${error}`);
-    });
-});
-
-// show route
-router.get('/:id', (req, res) => {
-  const foodId = req.params.id;
-  Food.findById(foodId)
-    .then((food) => {
-      const { username, loggedIn, userId } = req.session;
-      res.render('foodDiaryEntries/show', { food, username, loggedIn, userId });
+      res.render('foods/edit', { food });
     })
     .catch((error) => {
       res.redirect(`/error?error=${error}`);
@@ -171,7 +144,7 @@ router.delete('/:id', (req, res) => {
   const foodId = req.params.id;
   Food.findByIdAndRemove(foodId)
     .then((food) => {
-      res.redirect('/foodDiaryEntries');
+      res.redirect('foods/mine');
     })
     .catch((error) => {
       res.redirect(`/error?error=${error}`);

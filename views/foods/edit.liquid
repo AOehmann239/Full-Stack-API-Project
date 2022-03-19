@@ -1,35 +1,17 @@
 {% layout 'layout.liquid' %} {% block content %}
 <div class="container-sm">
-  <form action="/food-diary/{{ entry.id }}" method="POST">
+  <form action="/food/{{ food.id }}?_method=PUT" method="POST">
     <fieldset>
-      <legend>Edit Diary Entry</legend>
-      <label class="form-label">Date: </label>
-      <input
-        type="date"
-        name="date"
-        placeholder="{{ entry.date }}"
-        value="{{ entry.date }}"
-        class="form-control"
-      />
-      <label class="form-label">Food:</label>
+      <legend>Edit Food</legend>
+      <label class="form-label">Amount: </label>
       <input
         type="text"
-        name="food"
-        placeholder="{{ entry.food }}"
-        value="{{ entry.body }}"
-        class="form-control"
-      />
-      <label class="form-label">Amount:</label>
-      <input
-        type="number"
-        name="amount"
-        min="1"
-        max="1000"
-        value="{{ entry.amount }}"
+        name="amountEntered"
+        placeholder="weight in grams"
         class="form-control"
       />
     </fieldset>
-    <input type="submit" value="Edit Diary" class="btn btn-success" />
+    <input type="submit" class="btn btn-success" value="Edit {{ food.name }}" />
   </form>
 </div>
 {% endblock %}

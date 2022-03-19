@@ -1,0 +1,24 @@
+{% layout 'layout.liquid'%}
+<!-- here we start our block content -->
+{% block content %}
+<div>
+  <h2 class="display-6">All My Foods</h2>
+  <div class="row">
+    {% for food in foods %}
+    <div class="card" style="width: 18rem">
+      <!-- card header -> name of food -->
+      <!-- card body -> ready to eat as title, color as text-->
+      <h5 class="card-header">{{ food.foodName }}</h5>
+      <div class="card-body">
+        <h5 class="card-title">Macros</h5>
+        <p class="card-text">Protein: {{ food.protein }}(g)</p>
+        <p class="card-text">Fats: {{ food.fats }}(g)</p>
+        <p class="card-text">Carbs: {{ food.carbs }}(g)</p>
+        <p class="card-text">Amount: {{ food.amount }}(g)</p>
+        <a href="/food/{{ food.id }}" class="btn btn-info"> </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

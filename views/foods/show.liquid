@@ -1,12 +1,12 @@
 {% layout 'layout.liquid' %} {% block content %}
 <div class="container-md">
-  
+  <legend>Food info</legend>
     <article>
-      <p> Food: {{ foodName }} </p>
-      <p> Protein: {{ protein }} </p>
-      <p> Fats: {{ fats }} </p>
-      <p> Carbs: {{ carbs }} </p>
-      <p> Amount: {{ amount }} (g)</p>
+      <p> Name: {{ foodName }} </p>
+      <p> Protein: {{ protein }}(g)</p>
+      <p> Fats: {{ fats }}(g)</p>
+      <p> Carbs: {{ carbs }}(g)</p>
+      <p> Amount: {{ amount }}(g)</p>
       <div class="btn-group">
         <form action="/food/add" method="POST">
           <input type="text" name="foodName" value="{{foodName}}" hidden>

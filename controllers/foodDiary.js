@@ -34,5 +34,18 @@ router.post('/', (req, res) => {
     dateEntered,
   });
 });
+
+router.post('/add', (req, res) => {
+  req.body.owner = req.session.userId;
+  console.log('this is the new Diary Entry', req.body);
+  FoodDiaryEntry.create(req.body)
+    .then((food) => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.json({ err });
+    });
+});
 // Export the Router
 module.exports = router;

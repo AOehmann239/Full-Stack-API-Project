@@ -1,8 +1,12 @@
 {% layout 'layout.liquid' %} {% block content %}
 <div class="container-md">
   <article>
-    <p>Date: {{ dateEntered }}</p>
-    <p>Foods: {{ food }}</p>
+    <h2>Date: {{ dateEntered }}</h2>
+
+    <h4>Today's Macros</h4>
+    <div>Protein: {{ protein }}</div>
+    <div>Fats: {{ fats }}</div>
+    <div>Carbs: {{ carbs }}</div>
   </article>
 </div>
 {% endblock %}

@@ -18,8 +18,10 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       {% if loggedIn %}
-      <a href="/foods/mine" class="nav-link text-light">View My Foods</a>
-      <!-- <a href="/food/new" class="nav-link text-light">New</a> -->
+
+      <a href="/food/new" class="nav-link text-light">Add Food</a>
+      <a href="/foodDiary/new" class="nav-link text-light">Add Day</a>
+      <a href="/food/mine" class="nav-link text-light">View My Foods</a>
       <a href="/foodDiary/mine" class="nav-link text-light">My Diary</a>
       <a href="/auth/logout" class="nav-link text-light">Log Out</a>
       {% else %}
