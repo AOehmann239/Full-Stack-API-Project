@@ -9,7 +9,7 @@ const { Schema, model } = mongoose;
 
 const foodDiarySchema = new Schema(
   {
-    date: { type: Date, required: true },
+    dateEntered: { type: Date, required: true },
     foods: [{ type: Schema.Types.ObjectID, ref: 'Food' }],
 
     owner: {

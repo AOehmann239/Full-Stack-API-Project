@@ -26,33 +26,13 @@ router.use((req, res, next) => {
 
 // Routes
 
-// index ALL
-// router.get('/', (req, res) => {
-//   res.render('index');
-// });
+//renders the create a food page
 router.get('/new', (req, res) => {
   const username = req.session.username;
   const loggedIn = req.session.loggedIn;
   res.render('foods/new', { username, loggedIn });
 });
-// // index that shows only the user's food diary entries
-// router.get('/mine', (req, res) => {
-//   // destructure user info from req.session
-//   const { username, userId, loggedIn } = req.session;
-//   FoodDiary.find({ owner: userId })
-//     .then((foodEntries) => {
-//       res.render('foodDiaryEntries/index', { foodEntries, username, loggedIn });
-//     })
-//     .catch((error) => {
-//       res.redirect(`/error?error=${error}`);
-//     });
-// });
 
-// // new route -> GET route that renders our page with the form
-// router.get('/new', (req, res) => {
-//   const { username, userId, loggedIn } = req.session;
-//   res.render('foodDiaryEntries/new', { username, loggedIn });
-// });
 let foodName = '';
 let protein = '';
 let fats = '';
@@ -80,7 +60,6 @@ router.post('/', (req, res) => {
       //   console.log(protein);
       //   console.log(fats);
       //   console.log(carbs);
-      //
       res.render('foods/show', {
         foodName,
         protein,
@@ -100,7 +79,7 @@ router.post('/add', (req, res) => {
   console.log('this is the new food', req.body);
   Food.create(req.body)
     .then((food) => {
-      console.log('this is the food', food);
+      //console.log('this is the food', food);
       res.redirect('/');
     })
     .catch((err) => {
@@ -108,13 +87,13 @@ router.post('/add', (req, res) => {
       res.json({ err });
     });
 });
-// index that shows only the user's fruits
+// index that shows only the user's foods
 router.get('/mine', (req, res) => {
   // find the foods
   Food.find({ owner: req.session.userId })
     // then render a template AFTER they're found
     .then((foods) => {
-      console.log('these are the foods', foods);
+      //console.log('these are the foods', foods);
       const username = req.session.username;
       const loggedIn = req.session.loggedIn;
 
@@ -154,7 +133,7 @@ router.put('/:id', (req, res) => {
     .catch((error) => res.json(error));
 });
 
-// SHOW ROUTE FOR ALL FOODS IN THE DATABASE NOT THE API
+// SHOW ROUTE FOR INDIVIDUAL FOOD ENTERED BEFORE SAVING TO DB
 router.get('/:id', (req, res) => {
   // first, we need to get the id
   const foodId = req.params.id;

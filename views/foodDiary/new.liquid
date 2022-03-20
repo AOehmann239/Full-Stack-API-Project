@@ -1,12 +1,18 @@
 {% layout 'layout.liquid' %} {% block content %}
 <div class="container-sm">
-  <form action="/foodDiary" method="POST">
+  <form action="/foodDiary/add" method="POST">
     <fieldset>
       <legend>Create New Diary Entry</legend>
       <label class="form-label">Date: </label>
-      <input type="date" name="dateEntered" class="form-control" />
+      <input
+        type="date"
+        name="dateEntered"
+        value="{{ dateEntered }}"
+        class="form-control"
+      />
     </fieldset>
-    <input type="submit" value="Create New Day" class="btn btn-success" />
+    <input type="submit" value="Create Day" class="btn btn-success" />
+    <!-- <a href="/foodDiary/new" class="btn btn-info">Go Back</a> -->
   </form>
 </div>
 {% endblock %}

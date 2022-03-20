@@ -1,0 +1,19 @@
+{% layout 'layout.liquid'%}
+<!-- here we start our block content -->
+{% block content %}
+<div>
+  <h2 class="display-6">All My Diary Entries</h2>
+  <div class="row">
+    {% for foodDiaryEntry in foodDiaryEntries %}
+    <div class="card" style="width: 18rem">
+      <!-- card header -> name of food -->
+      <!-- card body -> ready to eat as title, color as text-->
+      <h5 class="card-header">{{ foodDiaryEntry.dateEntered }}</h5>
+      <div>
+        <a href="/foodDiary/{{ foodDiaryEntry.id }}" class="btn btn-info"> </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
