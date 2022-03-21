@@ -2,20 +2,62 @@
 <div class="container-md">
   <legend>{{ foodDiaryEntry.dateEntered }}</legend>
     <article>
-      <!-- <p> Date: {{ foodDiaryEntry.dateEntered }} </p> -->
       
       {% if foodDiaryEntry.owner == userId %}
-    <div class="btn-group">
-      <a href="/foodDiary/{{ foodDiaryEntry.id }}/edit" class="btn btn-primary">Edit</a>
-      <form action="/foodDiary/{{ foodDiaryEntry._id }}?_method=DELETE" method="POST">
-        <input type="submit" value="Delete Day" class="btn btn-danger" />
-      </form>
-    </div>
-    {% endif %}
-        </form>
+      <div>
+        <h4 class="display-6">All My Foods</h4>
+        <div class="row">
+          {% for food in foods %}
+            <div class="card" style="width: 12rem">
+              <h5 class="card-header">{{ food.foodName }}</h5>
+              <div class="card-body">
+                <p class="card-text">Protein: {{ food.protein }}(g)</p>
+                <p class="card-text">Fats: {{ food.fats }}(g)</p>
+                <p class="card-text">Carbs: {{ food.carbs }}(g)</p>
+                <p class="card-text">Amount: {{ food.amount }}(g)</p>
+                <div class="btn-group">
+                  <label class="form-label">Add Food:</label>
+                  <form action="/foodDiary/{{ foodDiaryEntry.id }}?_method=PUT" method="POST">
+                    <input type="text" name="protein" value="{{protein}}" hidden>
+                    <input type="text" name="fats" value="{{fats}}" hidden>
+                    <input type="text" name="carbs" value="{{carbs}}" hidden>
+                    <input type="text" name="amount" value="{{amount}}" hidden>
+                    <input type="checkbox" name="addedToDay" class="form-check-input" />
+                  </form>
+                  
+                </div>
+              </div>
+          {% endfor %}
+        </div>
       </div>
+      <div class="btn-group">
+        
+        <form action="/foodDiary/{{ foodDiaryEntry._id }}?_method=DELETE" method="POST">
+          <input type="submit" value="Delete Day" class="btn btn-danger" />
+        </form>
+        <form action="/foodDiary/{{ foodDiaryEntry.id }}" method="POST">
+          <input type="submit" value="See today's macros" class="btn btn-success" />
+        </form>
+      </div>  
+    {% endif %}
+    {% assign proteinTotal = 0 %}
+    {% assign carbsTotal = 0 %}
+    {% assign fatsTotal = 0 %}
+    {% for food in foods %}
+    {% if food.addedToDay == true %}
+    {% assign proteinTotal = proteinTotal | plus: food.protein  %}
+    {% assign fatsTotal = fatsTotal | plus: food.fats  %}
+    {% assign carbsTotal = carbsTotal | plus: food.carbs  %}
+    {% endif %}
+    {% endfor %}
+    <script>console.log(proteinTotal)</script>
+  <div>Daily Protein: {{ proteinTotal}}</div>
+  <div>Daily Fats: {{ fatsTotal}}</div>
+  <div>Daily Carbs: {{ carbsTotal }}</div>
     </article>
-  
-  </article>
-</div>
+</div>    
 {% endblock %}
+
+
+
+  

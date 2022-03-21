@@ -67,19 +67,6 @@ router.get('/mine', (req, res) => {
     });
 });
 
-router.post('/add', (req, res) => {
-  req.body.owner = req.session.userId;
-  console.log('this is the new Diary Entry', req.body);
-  FoodDiaryEntry.create(req.body)
-    .then((food) => {
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log(err);
-      res.json({ err });
-    });
-});
-
 // edit route -> GET that takes us to the edit form view
 router.get('/:id/edit', (req, res) => {
   // we need to get the id
@@ -93,42 +80,93 @@ router.get('/:id/edit', (req, res) => {
     });
 });
 
-// update route -> sends a put request to our database
-router.put('/:id', (req, res) => {
-  // get the id
-  const entryId = req.params.id;
-  // tell mongoose to update the food
-  FoodDiaryEntry.findByIdAndUpdate(entryId, req.body, { new: true })
-    .then((foodDiaryEntry) => {
-      res.redirect(`/foodDiaryEntry/${foodDiaryEntry.id}`);
-    })
-    .catch((error) => res.json(error));
-});
+// router.post('/macroTotals', (req, res) => {
+//   req.body.addedToDay = req.body.addedToDay === 'on' ? true : false;
+//   req.body.owner = req.session.userId;
+//   proteinTotal = proteinTotal + food.protein;
+//   fatsTotal = fatsTotal + food.fats;
+//   carbsTotal = carbsTotal + food.carbs;
+//   console.log('this is the new food', req.body);
+//   FoodDiaryEntry.create(req.body)
+//     .then((entry) => {
+//       //console.log('this is the food', food);
+//       res.render('/foodDiary/macroTotals');
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.json({ err });
+//     });
+// });
+// // update route -> sends a put request to our database
+// router.put('/macroTotals', (req, res) => {
+//   const entryId = req.params.id;
+//   req.body.addedToDay = req.body.addedToDay === 'on' ? true : false;
+//   if (req.body.addedToDay === true) {
+//     FoodDiaryEntry.findByIdAndUpdate(entryId, req.body, { new: true })
+//       .then((foodDiaryEntry) => {
+//         res.redirect(`/foodDiaryEntry/${foodDiaryEntry.id}`);
+//       })
+//       .catch((error) => res.json(error));
+//   }
+// });
 
-// SHOW ROUTE FOR INDIVIDUAL FOOD ENTERED BEFORE SAVING TO DB
+// // update w macros route
+// router.put('/:id', (req, res) => {
+//   // get the id
+//   const entryId = req.params.id;
+//   // tell mongoose to update the food
+//   FoodDiaryEntry.findByIdAndUpdate(entry, req.body, { new: true })
+//     .then((foodDiaryEntry) => {
+//       // console.log('the updated fruit', fruit);
+
+//       res.redirect(`/foodDiary/${foodDiaryEntry.id}`);
+//     })
+//     .catch((error) => res.json(error));
+// });
+
+//SHOW ROUTE FOR INDIVIDUAL DAY
 router.get('/:id', (req, res) => {
   // first, we need to get the id
   const entryId = req.params.id;
   // then we can find a fruit by its id
-  FoodDiaryEntry.findById(entryId)
-    .then((foodDiaryEntry) => {
-      console.log('the entry we got\n', foodDiaryEntry);
-      const username = req.session.username;
-      const loggedIn = req.session.loggedIn;
-      const userId = req.session.userId;
-      res.render('foodDiary/show', {
-        foodDiaryEntry,
-        username,
-        loggedIn,
-        userId,
-        // amount,
+  FoodDiaryEntry.findById(entryId).then((foodDiaryEntry) => {
+    console.log('the entry we got\n', foodDiaryEntry);
+    // console.log('this is all of the my foods', allFoods);
+    const username = req.session.username;
+    const loggedIn = req.session.loggedIn;
+    const userId = req.session.userId;
+
+    Food.find({ owner: req.session.userId })
+      .then((foods) => {
+        //console.log('these are the foods', foods);
+        res.render('foodDiary/show', {
+          foods,
+          foodDiaryEntry,
+          username,
+          loggedIn,
+          userId,
+        });
+      })
+      // if there is an error, show that instead
+      .catch((err) => {
+        console.log(err);
+        res.json({ err });
       });
+  });
+});
+// update route
+router.put('/:id', (req, res) => {
+  // get the id
+  const entryId = req.params.id;
+  req.body.addedToDay = req.body.addedToDay === 'on' ? true : false;
+  // tell mongoose to update the food
+  FoodDiaryEntry.findByIdAndUpdate(entryId, req.body, { new: true })
+    .then((foodDiaryEntry) => {
+      // console.log('the updated fruit', fruit);
+
+      res.update(`/foodDiary/${foodDiaryEntry.id}`);
     })
-    // if there is an error, show that instead
-    .catch((err) => {
-      console.log(err);
-      res.json({ err });
-    });
+    .catch((error) => res.json(error));
 });
 
 // delete route

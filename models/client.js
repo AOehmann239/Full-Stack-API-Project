@@ -9,10 +9,10 @@ const { Schema, model } = mongoose;
 
 const clientSchema = new Schema(
   {
-    age: { type: Number, required: true },
-    weight: { type: Number, required: true },
-    height: { type: Number, required: true },
-    goal: { type: String, required: true },
+    ageEntered: { type: Number, required: true },
+    weightEntered: { type: Number, required: true },
+    heightEntered: { type: Number, required: true },
+    // goal: { type: String, required: true },
     owner: {
       type: Schema.Types.ObjectID,
       ref: 'User',

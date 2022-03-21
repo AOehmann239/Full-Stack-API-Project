@@ -14,6 +14,7 @@ const foodSchema = new Schema(
     fats: { type: Number, required: true },
     carbs: { type: Number, required: true },
     amount: { type: Number, required: true },
+    addedToDay: { type: Boolean },
     owner: {
       type: Schema.Types.ObjectID,
       ref: 'User',
