@@ -2,10 +2,17 @@
 <div class="container-md">
   <legend>Bio info</legend>
     <article>
-      <p> Protein: {{ client.protein }} </p>
-      <p> Fats: {{ client.protein }}(g)</p>
-      <p> Carbs: {{ client.fats }}(g)</p>
-      {% if client.owner == userId %}
+      <p> Age: {{ client.age }} </p>
+      <p> Height: {{ client.height }}(cm)</p>
+      <p> Weight: {{ client.weight }}(kg)</p>
+      <div class="btn-group">
+        <form action="/client/add" method="POST">
+          <input type="text" name="fats" value="{{fats}}" hidden>
+          <input type="text" name="carbs" value="{{carbs}}" hidden>
+          <input type="text" name="amount" value="{{amount}}" hidden>
+          <input type="submit" value="Add Food" class="btn btn-success" />
+        </form>
+        <a href="/food/new" class="btn btn-info">Go Back</a>
    
     {% endif %}
         </form>

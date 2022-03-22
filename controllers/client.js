@@ -30,20 +30,7 @@ router.get('/new', (req, res) => {
   res.render('clients/new', { username, loggedIn });
 });
 
-router.post('/', (req, res) => {
-  const clientAge = req.body.ageEntered;
-  const clientHeight = req.body.heightEntered;
-  const clientWeight = req.body.weightEntered;
-
-  const totalCals = 10 * clientWeight + 6.25 * clientHeight - 5 * clientAge + 5;
-  // the client values for prot fat car are in grams
-  const clientProtein = clientWeight.value; // does this give you the value without changing the property client weight?
-  const clientFats = clientWeight.value * 0.4;
-  const clientCarbs =
-    (totalCals - clientProtein.value * 4 - clientFats.value * 9) * 4;
-});
-
-//add the info for the diary entry to the data of saved entries
+//add the client bio to the data of saved entries
 router.post('/add', (req, res) => {
   req.body.owner = req.session.userId;
   // req.body.foodName = foodName;
@@ -62,17 +49,39 @@ router.post('/add', (req, res) => {
     });
 });
 
-// index that shows only the user's bio
-router.get('/myBio', (req, res) => {
+// index that shows only the user's info
+router.get('/myMacros', (req, res) => {
   // find the foods
   Client.find({ owner: req.session.userId })
     // then render a template AFTER they're found
     .then((client) => {
-      //console.log('these are the foods', foods);
       const username = req.session.username;
       const loggedIn = req.session.loggedIn;
+      const clientAge = req.body.age;
+      const clientHeight = req.body.height;
+      const clientWeight = req.body.weight;
+      console.log('this is the clients age', clientAge);
 
-      res.render('client/myBio', { client, username, loggedIn });
+      const totalCals =
+        //need to get weight to kg for this equation
+        (10 * clientWeight) / 2.205 + 6.25 * clientHeight - 5 * clientAge + 5;
+      // the client values for prot fat car are in grams
+      const clientProtein = clientWeight; // does this give you the value without changing the property client weight?
+      const clientFats = clientWeight * 0.4;
+      console.log('this is the clients protein', clientProtein);
+      const clientCarbs = (totalCals - clientProtein * 4 - clientFats * 9) * 4;
+      res.render('clients/myMacros', {
+        client,
+        username,
+        loggedIn,
+        clientAge,
+        clientHeight,
+        clientWeight,
+        clientProtein,
+        clientFats,
+        clientCarbs,
+        totalCals,
+      });
     })
     // show an error if there is one
     .catch((error) => {

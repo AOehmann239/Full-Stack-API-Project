@@ -1,26 +1,26 @@
 {% layout 'layout.liquid' %} {% block content %}
 <div class="container-sm">
-  <form action="/client" method="POST">
+  <form action="/client/add" method="POST">
     <fieldset>
       <legend>Create New Bio</legend>
       <label class="form-label">Age: </label>
       <input
         type="number"
-        name="ageEntered"
+        name="age"
         placeholder="number in years"
         class="form-control"
       />
       <label class="form-label">Weight:</label>
       <input
         type="number"
-        name="weightEntered"
-        placeholder="weight in kg"
+        name="weight"
+        placeholder="weight in pounds"
         class="form-control"
       />
       <label class="form-label">Height:</label>
       <input
         type="number"
-        name="heightEntered"
+        name="height"
         placeholder="height in cm"
         class="form-control"
       />
